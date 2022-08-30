@@ -57,18 +57,6 @@ def is_paren_balanced(paren_string):
     else:
         return False
 
-
-
-# print("String : (((({})))) Balanced or not?")
-# print(is_paren_balanced("(((({}))))"))
-
-# print("String : [][]]] Balanced or not?")
-# print(is_paren_balanced("[][]]]"))
-
-# print("String : [][] Balanced or not?")
-# print(is_paren_balanced("[][]"))
-
-
 import unittest
 class CountLowHighTests(unittest.TestCase):
 
