@@ -1,4 +1,4 @@
-#reverser st ring 2 using Stack through out
+#reverser string 2 using Stack through out
 #step to solution
 #implement stack
 #for item in string, push to a stack
@@ -14,12 +14,16 @@ class Stack():
         return self.items.pop()
     def is_empty(self):
         return self.items == []
+    
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
         
     def display_stack(self):
         print("Stack content", self.items)
 
 def reverse_string(stack: Stack, strings: str):
-    s = Stack()
+    s = stack()
     for i in strings:
         s.push(i)
     
