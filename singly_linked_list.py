@@ -12,6 +12,8 @@ class LinkedList():
         self.head = None
         
     def append(self, data):
+        #time complexity:O(n)
+        #since we need to go thru
         new_node = Node(data)
         #if head is empty, use this node as the head
         if self.head is None:
@@ -39,6 +41,7 @@ class LinkedList():
             
         print(list_data)
     def prepend(self,data):
+        #time complexity:O(1), constant time
         #solution steps
         #create a new node
         #set new node as head if head is None
@@ -57,36 +60,79 @@ class LinkedList():
         return 
         
     def insert_after_node(self,existing_node:Node, data:Any):
+        #time complexity:constant time->O(1)
         #solution steps[1] [2] [3] [4]
-        
+        #create a new node with data given
+        #set new node as next of existing node
+        #set the initial next of the existing as the next of the newly created node
+        if type(existing_node) != Node:
+            raise ValueError("Previous node must be a node instance!")
         new_node : Node = Node(data)
         existing_node_next = existing_node.next
        
         existing_node.next = new_node
         new_node.next = existing_node_next
-            
-            
-        #create a new node with data given
-        #set new node as next of existing node
-        #set the initial next of the existing as the next of the newly created node
+    def delete_by_value(self, value):
+        #[1] [2]  [3] [4] [5] 
+        #solution steps
+        #idenfity the head of the LinkedList
+        #move through the List and check for data match
+        #If match occurs:
+        #       when match occurs at a node...
+        #       pick the previous node 
+        #       set the previous node next to be the next of the match
+        
+        prev_node = None
+        head = self.head
+        if head and head.data == value:
+            self.head =  None
+            return
+        
+        while head:
+            if head.data == value :
+                prev_node.next = head.next
+                head = prev_node.next
+            else:
+                prev_node = head
+                head = head.next
+                
+        return
 
 
     
 
-
-#initialise a Linked List
+#Test delete by value
 l = LinkedList() 
-l.append(1)
+l.append(100)
 l.append(2)
 l.append(3)
-node = l.append(4)
+l.append(4)
 l.append(5)
-
-
-l.insert_after_node(node, 99)
-l.insert_after_node(l.head.next, 900)
-# l.prepend(4)
-#create a node
-# node = Node(99)
-
+l.append(6)
+l.append(100)
+l.append(2)
+l.append(8)
+l.append(5)
+l.append(2)
+l.append(10)
+l.append(2)
+l.delete_by_value(100)
+# print("is deleted", is_deleted)
 l.print_list()
+
+
+
+
+#initialise a Linked List
+#Test append and insert
+# l = LinkedList() 
+# l.append(1)
+# l.append(2)
+# l.append(3)
+# node = l.append(4)
+# l.append(5)
+
+
+# l.insert_after_node(node, 99)
+# l.insert_after_node(l.head.next, 900)
+# l.print_list()
