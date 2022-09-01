@@ -1,3 +1,4 @@
+from operator import le
 from typing import Any
 
 
@@ -97,13 +98,73 @@ class LinkedList():
                 head = head.next
                 
         return
+    def delete_by_position(self, position):
+        #solution steps [1] [2] [3] [4]
+        #handle edge case of position being 0
+        #1. validate input: Expect only +ve interger
+        #2 initialize count to be -1
+        #3.on getting to a match
+        #4.     set prev_node next to be d current/match node next 
+        #5. if position is passed as zero, set the next node as 
+        
+        #validate position
+        if position < 0: raise ("Postion cannot be less thank 0")
+        
 
-
+        
+        prev_node = None
+        index = -1
+        head = self.head
+        
+        #handle edge case of position Zero
+        if head and position == 0:
+            self.head = head.next
+            return
+        
+        while head:
+            index += 1
+            if index == position:
+                prev_node.next = head.next
+                head = prev_node.next
+            else:
+                prev_node = head
+                head = head.next
+                
+    def leng(self) -> int:
     
+        #solution steps
+        #identify the head of the LinkedLIst
+        #move through the list and count till where Node next is empty i.e. end
+        
+        head = self.head
+        if not head:
+            return 0
+        
+        count = 0
+        while head:
+            count += 1
+            head = head.next
+        return count
 
-#Test delete by value
+        
+    def count(self, head):
+        lenght = 1
+        head = head
+        if head.next == None:
+            return lenght
+        else:
+            head= head.next
+            value = self.count(head)
+            lenght += value
+                
+
+            
+        return lenght
+        
+        
+# Test recursive  LinkedList count
 l = LinkedList() 
-l.append(100)
+l.append(99)
 l.append(2)
 l.append(3)
 l.append(4)
@@ -116,10 +177,104 @@ l.append(5)
 l.append(2)
 l.append(10)
 l.append(2)
-l.delete_by_value(100)
-# print("is deleted", is_deleted)
-l.print_list()
+l.append(99)
+l.append(2)
+l.append(3)
+l.append(4)
+l.append(5)
+l.append(6)
+l.append(100)
+l.append(2)
+l.append(8)
+l.append(5)
+l.append(2)
+l.append(10)
+l.append(2)
+value = l.count(l.head)
+print("my lenght", value)
+                            
 
+
+
+
+                
+# #Test count LinkedList
+# l = LinkedList() 
+# l.append(99)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# l.append(99)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# value = l.leng()
+# print("my lenght", value)
+                
+
+
+
+
+
+
+
+            
+# #Test delete by position
+# l = LinkedList() 
+# l.append(99)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# l.delete_by_position(0)
+# # print("is deleted", is_deleted)
+# l.print_list()
+                
+                
+# #Test delete by value
+# l = LinkedList() 
+# l.append(100)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# l.delete_by_value(100)
+# # print("is deleted", is_deleted)
+# l.print_list()
 
 
 
