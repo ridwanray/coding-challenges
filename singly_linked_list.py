@@ -35,11 +35,12 @@ class LinkedList():
     def print_list(self):
         current_node = self.head
         list_data =[]
+        count = 0
         while current_node:
             # print(current_node.data)
             list_data.append(current_node.data)
-            current_node = current_node.next
-            
+            current_node = current_node.next 
+            count +=1
         print(list_data)
     def prepend(self,data):
         #time complexity:O(1), constant time
@@ -146,52 +147,191 @@ class LinkedList():
             head = head.next
         return count
 
-        
+    def len_recursive(self, node):
+        if node is None:
+            return 0
+        return 1 + self.len_recursive(node.next)
+
     def count(self, head):
         lenght = 1
-        head = head
         if head.next == None:
             return lenght
         else:
             head= head.next
-            value = self.count(head)
-            lenght += value
+            # value = self.count(head)
+            lenght = lenght + self.count(head)
                 
 
             
         return lenght
+    def node_swap(self,first=None, second= None):
+        # [1] [2 [3] [4] [5] [6]
+        #solution steps
+        #Accept two nodes data as parameters
+        #Identify the head of the LinkedList
+        #Move thru the list to find the nodes
+        #swap their pointers(previous node and next node) 
+        
+        #validate input
+        if not first or not second:
+            raise ValueError("Put two data to swap")
+        
+        #initialize two nodes
+        first_node = None
+        second_node = None
+        
+        first_node_prev = None
+        second_node_prev = None
+        
+        previous_node = None
+         
+        current_node = self.head
+        
+        while current_node:
+            if current_node.data == first:
+                first_node = current_node
+                first_node_next = current_node.next
+                first_node_prev = previous_node
+                previous_node = current_node
+                current_node = current_node.next
+                
+            elif current_node.data == second:
+                second_node = current_node
+                second_node_next = current_node.next
+                second_node_prev = previous_node
+                previous_node = current_node
+                current_node = current_node.next
+                           
+            else:
+                previous_node = current_node
+                current_node = current_node.next
+                
+        if not first_node or not second_node: raise ValueError(f"Some nodes where not found in List")
+        
+        #swap Node prev and next pointer
+        ## [1] [2] [3] [4] [5] [6]
+        #      [5]         [2] 
+
+        #handle consecutive nodes
+
+        if first_node_next == second_node:
+            if first_node_prev is None:
+                self.head = second_node
+                second_node.next = first_node
+                first_node.next = second_node_next
+            else:
+                
+                first_node_prev.next = second_node
+                second_node.next = first_node
+                first_node.next = second_node_next
+            
+        
+        else:
+            second_node_prev.next =  first_node
+            first_node.next = second_node_next
+            if first_node_prev is None:
+                self.head = second_node
+                second_node.next = first_node_next
+               
+            else: 
+                first_node_prev.next = second_node
+                second_node.next = first_node_next
+        
+        return  
+    
+    def edu_swap_nodes(self, key_1, key_2):
+
+        if key_1 == key_2:
+            return 
+
+        prev_1 = None 
+        curr_1 = self.head 
+        while curr_1 and curr_1.data != key_1:
+            prev_1 = curr_1 
+            curr_1 = curr_1.next
+
+        prev_2 = None 
+        curr_2 = self.head 
+        while curr_2 and curr_2.data != key_2:
+            prev_2 = curr_2 
+            curr_2 = curr_2.next
+
+        if not curr_1 or not curr_2:
+            return 
+
+        if prev_1:
+            prev_1.next = curr_2
+        else:
+            self.head = curr_2
+
+        if prev_2:
+            prev_2.next = curr_1
+        else:
+            self.head = curr_1
+
+        curr_1.next, curr_2.next = curr_2.next, curr_1.next
         
         
-# Test recursive  LinkedList count
+# # Test rswap
 l = LinkedList() 
-l.append(99)
+l.append(1)
 l.append(2)
 l.append(3)
 l.append(4)
 l.append(5)
 l.append(6)
-l.append(100)
-l.append(2)
+l.append(7)
 l.append(8)
-l.append(5)
-l.append(2)
+l.append(9)
 l.append(10)
-l.append(2)
-l.append(99)
-l.append(2)
-l.append(3)
-l.append(4)
-l.append(5)
-l.append(6)
-l.append(100)
-l.append(2)
-l.append(8)
-l.append(5)
-l.append(2)
-l.append(10)
-l.append(2)
-value = l.count(l.head)
-print("my lenght", value)
+l.append(11)
+l.append(12)
+l.append(13)
+l.node_swap(1,2)
+l.print_list()
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+# # Test recursive  LinkedList count 
+# l = LinkedList() 
+# l.append(99)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# l.append(99)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(100)
+# l.append(2)
+# l.append(8)
+# l.append(5)
+# l.append(2)
+# l.append(10)
+# l.append(2)
+# value = l.count(l.head)
+# print("my lenght", value)
                             
 
 
