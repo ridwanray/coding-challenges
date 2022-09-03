@@ -271,8 +271,44 @@ class LinkedList():
 
         curr_1.next, curr_2.next = curr_2.next, curr_1.next
         
+    def reverse_linked_list(self):
+        #solution steps
+        #[1] [2] [3] [4] [5] [6] => [6] [5] [4] [3] [2] [1]
+        #identify the head
+        #move through the list
+        #for every node, set the its previous node as the next
+        #move through the list
+        #set the its previous node as the next until th
+        current_node:Node  = self.head
+        if not current_node: raise ValueError("List is empty. head is None!")
         
-# # Test rswap
+        prev_node = None
+        while current_node:
+                nxt = current_node.next
+                current_node.next = prev_node
+                
+                
+                prev_node = current_node
+                current_node = nxt
+              
+        self.head = prev_node
+    
+    def reverse_recursive(self):
+        #solution steps
+        #[1] [2] [3] [4] [5] [6] => [6] [5] [4] [3] [2] [1]
+        def _reverse_recursive(cur, prev):
+            if not cur:
+                return prev
+            nxt = cur.next
+            cur.next = prev
+            prev = cur 
+            cur = nxt 
+            return _reverse_recursive(cur, prev)
+
+        self.head = _reverse_recursive(cur=self.head, prev=None)
+             
+
+#Recursively reverse linked list          
 l = LinkedList() 
 l.append(1)
 l.append(2)
@@ -286,22 +322,50 @@ l.append(9)
 l.append(10)
 l.append(11)
 l.append(12)
-l.append(13)
-l.node_swap(1,2)
-l.print_list()
-
+# l.append(13)
+l.reverse_recursive()
+l.print_list()    
+    
         
         
+#Test reverse linked list:iteration method    
+# l = LinkedList() 
+# l.append(1)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(7)
+# l.append(8)
+# l.append(9)
+# l.append(10)
+# l.append(11)
+# l.append(12)
+# l.append(13)
+# l.reverse_linked_list()
+# l.print_list()    
+    
+    
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
+# # Test rswap
+# l = LinkedList() 
+# l.append(1)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(7)
+# l.append(8)
+# l.append(9)
+# l.append(10)
+# l.append(11)
+# l.append(12)
+# l.append(13)
+# l.node_swap(1,2)
+# l.print_list()
+    
 # # Test recursive  LinkedList count 
 # l = LinkedList() 
 # l.append(99)
