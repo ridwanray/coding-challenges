@@ -1,4 +1,3 @@
-from operator import neg
 from typing import Any
 
 class Node():
@@ -439,9 +438,76 @@ class LinkedList():
             
             cur = prev_node.next
                 
+    def nth_to_last_node(self, n : int):
+        #[1] [2] [3] [4] [5] [6] [7]
+        #solution steps
+        #accept postion as parameter
+        #identify node head
+        #go through the list untill the postion is reach
+        #set it as the head
 
-#Test remove duplicates in List
-
+        
+        if n <= 0:raise ValueError("Position starts from 1")
+        cur = self.head
+        init_position = 0
+        while cur :
+            init_position += 1
+            if init_position == n:
+                self.head = cur
+                break
+            else:
+                cur = cur.next
+                
+    def print_nth_from_last(self, n):
+        total_len = self.count()
+  
+        cur = self.head 
+        while cur:
+            if total_len == n:
+                print(cur.data)
+                return cur.data
+            total_len -= 1
+            cur = cur.next
+        if cur is None:
+            return         
+    def count_number_of_occurence_iterative (self, data):
+        #interative method 
+        #solution steps
+        #accepts data to search as parameter
+        #identify the head of the node
+        #move thru the list, for every occurence, increment count
+        cur = self.head
+        count = 0
+        
+        while cur:
+            if cur.data == data:
+                count += 1
+            cur = cur.next
+        
+        return count
+    
+    def recursive_count_occurence(self, data, cur):    
+        count = 0
+        
+        if cur is None:
+            return 0
+        
+        if cur.data == data:
+            count += 1
+        cur = cur.next
+        count = count + self.recursive_count_occurence(data, cur)     
+        return count
+    
+    def count_occurences_recursive(self, node, data):
+        if not node:
+            return 0 
+        if node.data == data:
+            return 1 + self.count_occurences_recursive(node.next, data)
+        else:
+            return self.count_occurences_recursive(node.next, data)
+                
+        
+#Test occurence iterative
 l1 = LinkedList() 
 l1.append(30)
 l1.append(35)
@@ -463,8 +529,66 @@ l1.append(30)
 l1.append(30)
 l1.append(75)
 l1.append(75232)
-l1.edu_remove_duplicate()
-l1.print_list() 
+l1.append(75232)
+x = l1.recursive_count_occurence(30, l1.head)
+y = l1.count_number_of_occurence_iterative(30)
+print("recursive value", x)
+print("iterative value", y)
+
+
+#Test nth to last node
+# l1 = LinkedList() 
+# l1.append(30)
+# l1.append(35)
+# l1.append(50)
+# l1.append(70)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(75)
+# l1.append(75232)
+# l1.append(75232)
+# l1.nth_to_last_node(13)
+# l1.print_list() 
+
+
+#Test remove duplicates in List
+
+# l1 = LinkedList() 
+# l1.append(30)
+# l1.append(35)
+# l1.append(50)
+# l1.append(70)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(30)
+# l1.append(75)
+# l1.append(75232)
+# l1.append(75232)
+# l1.edu_remove_duplicate()
+# l1.print_list() 
 
 
 
