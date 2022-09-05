@@ -1,6 +1,5 @@
-from operator import le
+from operator import neg
 from typing import Any
-
 
 class Node():
     def __init__(self, data):
@@ -306,25 +305,237 @@ class LinkedList():
             return _reverse_recursive(cur, prev)
 
         self.head = _reverse_recursive(cur=self.head, prev=None)
-             
+        
+    
+    def merge_two_linkedlist(self, l2:'LinkedList'):
+        #solution steps 
+        #1. Accept 2 lists as parameter
+        #identify 1st list head
+        #2. move till the end of first list
+        #3  set the next node of l1 end to head to second list
+        # [1] [2] [3] [4]    [5] [6] [7] [8]
+        current_node = self.head
+        prev_node = None
+        while current_node:
+            prev_node = current_node
+            current_node =  current_node.next
+            
+        prev_node.next = l2.head  
+        
+    def merge_two_sorted_lists(self, l2:'LinkedList')->Any:
+        #solution steps
+        #1. get the head of both LinkedList, i.e. p and q
+        #2. compare their respective data and make s point to smaller
+        #3. if the lower is in p, new p points to next node in p
+        #4. otherwise new q points to next node in q
+        #5. repeat step 2 to 4 until either p or q is null, then s points to the one
+        #that is not null
+                
 
-#Recursively reverse linked list          
-l = LinkedList() 
-l.append(1)
-l.append(2)
-l.append(3)
-l.append(4)
-l.append(5)
-l.append(6)
-l.append(7)
-l.append(8)
-l.append(9)
-l.append(10)
-l.append(11)
-l.append(12)
-# l.append(13)
-l.reverse_recursive()
-l.print_list()    
+        merged = LinkedList() #initialize Linkedlist to hold final merge list
+        
+        p = self.head
+        q = l2.head
+        
+        p_data = p.data
+        q_data = q.data
+        
+        smaller_value = p_data if p_data < q_data else q_data #get the smaller value
+        
+        head = p if smaller_value == p.data else q   #get the node of the smaller value
+ 
+        merged.head = head       #set the head of the final LinkedList
+       
+        if smaller_value == p.data:
+            p = p.next
+        else:
+            q = q.next
+        prev_node = head
+        while p or q:
+            
+            if not q or not p: #handle case when a list has reach end, just copy remain list content accordingly
+                if p:
+                    prev_node.next = p
+                    break
+                   
+                if q:
+                    prev_node.next = q
+                    break
+            
+            p_data = p.data
+            q_data = q.data
+
+            smaller_value = p_data if p_data < q_data else q_data
+            smaller_node = p if smaller_value == p.data else q
+            prev_node.next = smaller_node
+            
+            
+            if smaller_value == p.data:
+                prev_node = p
+                p = p.next
+            else:
+                prev_node = q
+                q = q.next
+        
+    
+        merged.print_list()
+
+
+    
+    def edu_merge_sorted(self, llist):
+
+        p = self.head 
+        q = llist.head
+        s = None
+
+        if not p:
+            return q
+        if not q:
+            return p
+
+        if p and q:
+            if p.data <= q.data:
+                s = p 
+                p = s.next
+            else:
+                s = q
+                q = s.next
+            new_head = s 
+        while p and q:
+            if p.data <= q.data:
+                s.next = p 
+                s = p 
+                p = s.next
+            else:
+                s.next = q
+                s = q
+                q = s.next
+        if not p:
+            s.next = q 
+        if not q:
+            s.next = p
+
+        self.head = new_head     
+        return self.head
+      
+    def edu_remove_duplicate(self):
+        #solution step
+        cur = self.head 
+        prev_node = None
+        
+        dup = dict()
+        
+        while cur:
+            
+            if cur.data in dup:
+                # Remove node:
+                prev_node.next = cur.next
+                cur = None
+                
+            else:
+                # Have not encountered element before.
+                dup[cur.data] = 1
+                prev_node = cur
+            
+            cur = prev_node.next
+                
+
+#Test remove duplicates in List
+
+l1 = LinkedList() 
+l1.append(30)
+l1.append(35)
+l1.append(50)
+l1.append(70)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(30)
+l1.append(75)
+l1.append(75232)
+l1.edu_remove_duplicate()
+l1.print_list() 
+
+
+
+#Test merge sorted list
+
+# l1 = LinkedList() 
+# l1.append(30)
+# l1.append(35)
+# l1.append(50)
+# l1.append(70)
+# l1.append(75)
+
+# l2 = LinkedList()
+# l2.append(20)
+# l2.append(48)
+# l2.append(80)
+# l2.append(90)
+# l2.append(100)
+# l2.append(200)
+# l2.append(300)
+# l2.append(400)
+
+# l1.merge_two_sorted_lists(l2)
+# l1.print_list()    
+    
+#p [1] [5] [7] [9] [10]
+#q  [2] [3] [4] [6] [8]
+
+
+
+
+
+
+
+
+   
+# #Merge two sorted list test  
+# l1 = LinkedList() 
+# l1.append(1)
+# l1.append(2)
+# l1.append(3)
+# l1.append(4)
+# l1.append(4)
+
+# l2 = LinkedList()
+# l2.append(5)
+# l2.append(6)
+# l2.append(7)
+# l2.append(8)
+# l2.append(9)
+
+# l1.merge_two_sorted_linkedlist(l2)
+# l1.print_list()    
+
+# #Recursively reverse linked list          
+# l = LinkedList() 
+# l.append(1)
+# l.append(2)
+# l.append(3)
+# l.append(4)
+# l.append(5)
+# l.append(6)
+# l.append(7)
+# l.append(8)
+# l.append(9)
+# l.append(10)
+# l.append(11)
+# l.append(12)
+# # l.append(13)
+# l.reverse_recursive()
+# l.print_list()    
     
         
         
@@ -397,11 +608,7 @@ l.print_list()
 # value = l.count(l.head)
 # print("my lenght", value)
                             
-
-
-
-
-                
+ 
 # #Test count LinkedList
 # l = LinkedList() 
 # l.append(99)
@@ -433,13 +640,6 @@ l.print_list()
 # value = l.leng()
 # print("my lenght", value)
                 
-
-
-
-
-
-
-
             
 # #Test delete by position
 # l = LinkedList() 
